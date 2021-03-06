@@ -743,7 +743,7 @@
           "outputFields": {
             "list": [
               {
-                "name": "status",
+                "name": "Status",
                 "type": "string",
                 "value": {
                   "widgetType": "expression/code",
@@ -759,7 +759,7 @@
                 }
               },
               {
-                "name": "status_code",
+                "name": "Status Art",
                 "type": "string",
                 "value": {
                   "widgetType": "expression/code",
@@ -849,7 +849,7 @@
                 "right": {
                   "value": {
                     "gate": "lookup",
-                    "name": "status"
+                    "name": "Status"
                   }
                 }
               }
@@ -871,19 +871,19 @@
           "outputFields": {
             "list": [
               {
-                "name": "lookup_status_code",
+                "name": "Status Art",
                 "type": "string",
                 "value": {
                   "widgetType": "expression/code",
                   "widgetData": {
-                    "text": "results.lookup[:status_code] default nil",
+                    "text": "results.lookup[:`Status Art`] default nil",
                     "size": {
                       "width": 0,
                       "height": 36
                     },
                     "syntax": "tweakflow"
                   },
-                  "code": "results.lookup[:status_code] default nil"
+                  "code": "results.lookup[:`Status Art`] default nil"
                 }
               }
             ]
@@ -1009,7 +1009,7 @@
           "outputFields": {
             "list": [
               {
-                "name": "leistung",
+                "name": "Leistung",
                 "type": "long",
                 "value": {
                   "widgetType": "expression/code",
@@ -1025,7 +1025,7 @@
                 }
               },
               {
-                "name": "leistung_einheit",
+                "name": "Leistungseinheit",
                 "type": "string",
                 "value": {
                   "widgetType": "expression/code",
@@ -1041,7 +1041,7 @@
                 }
               },
               {
-                "name": "utm_zone",
+                "name": "UTM Zone",
                 "type": "long",
                 "value": {
                   "widgetType": "expression/code",
@@ -1182,51 +1182,51 @@
           "outputFields": {
             "list": [
               {
-                "name": "utm2ll_result",
+                "name": "Konvertierung",
                 "type": "any",
                 "value": {
                   "widgetType": "expression/code",
                   "widgetData": {
-                    "text": "vars.utm2ll(in.Ostwert, in.Nordwert, in.utm_zone, entry_vars.hemis)",
+                    "text": "vars.utm2ll(in.Ostwert, in.Nordwert, in.`UTM Zone`, entry_vars.hemis)",
                     "size": {
                       "width": 0,
                       "height": 36
                     },
                     "syntax": "tweakflow"
                   },
-                  "code": "vars.utm2ll(in.Ostwert, in.Nordwert, in.utm_zone, entry_vars.hemis)"
+                  "code": "vars.utm2ll(in.Ostwert, in.Nordwert, in.`UTM Zone`, entry_vars.hemis)"
                 }
               },
               {
-                "name": "latitude_degrees",
+                "name": "Breitengrad",
                 "type": "any",
                 "value": {
                   "widgetType": "expression/code",
                   "widgetData": {
-                    "text": "entry_vars.decdeg2deg(utm2ll_result[:latitude_decimal])",
+                    "text": "entry_vars.decdeg2deg(Konvertierung[:latitude_decimal])",
                     "size": {
                       "width": 0,
                       "height": 36
                     },
                     "syntax": "tweakflow"
                   },
-                  "code": "entry_vars.decdeg2deg(utm2ll_result[:latitude_decimal])"
+                  "code": "entry_vars.decdeg2deg(Konvertierung[:latitude_decimal])"
                 }
               },
               {
-                "name": "longitude_degrees",
+                "name": "Längengrad",
                 "type": "any",
                 "value": {
                   "widgetType": "expression/code",
                   "widgetData": {
-                    "text": "entry_vars.decdeg2deg(utm2ll_result[:longitude_decimal])",
+                    "text": "entry_vars.decdeg2deg(Konvertierung[:longitude_decimal])",
                     "size": {
                       "width": 0,
                       "height": 36
                     },
                     "syntax": "tweakflow"
                   },
-                  "code": "entry_vars.decdeg2deg(utm2ll_result[:longitude_decimal])"
+                  "code": "entry_vars.decdeg2deg(Konvertierung[:longitude_decimal])"
                 }
               }
             ]
