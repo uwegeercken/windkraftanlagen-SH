@@ -1,0 +1,1328 @@
+{
+  "type": "data-flow",
+  "appVersion": "1.14.2",
+  "properties": {
+    "meta": {
+      "comment": {
+        "markdown": {
+          "text": {
+            "text": "##### INFO\n\nFolgende Spalten sind enthalten:\n\n- Kreis - Name des Kreises, auf dessen Gebiet sich die Anlage befindet\n- Gemeinde - Name der Gemeinde, auf deren Gebiet sich die Anlage befindet\n- Anlage - Bezeichnung der Anlage\n- Inbetriebnahme - Jahr der Inbetriebnahme\n- Leistung - Leistung der Anlage (Zahl mit Maßeinheit, Dezimaltrennzeichen ist Punkt)\n- Nabenhöhe - Nabenhöhe in Metern - Dezimaltrenner ist Komma, bei in Genehmigung befindlichen Anlagen kann Text enthalten sein\n- Rotordurchmesser - Rotordurchmesser in Metern - Dezimaltrenner ist Komma, bei in Genehmigung befindlichen Anlagen kann Text enthalten sein\n- Ostwert - Ostwert bzw. Rechtswert der geographischen Position\n- Nordwert - Nordwert bzw. Hochwert der geographischen Position\n- Status - Status der Angabe. Hier sind folgende Werte möglich: \"in Betrieb\", \"vor Inbetriebnahme\", \"im Gen.Verf.\" = im Genehmigungsverfahren\n\nNotes: \n- Als Koordinatenbezugssystem (KBS bzw. CRS) wird EPSG:4647 verwendet.\n- Ostwert und Nordwert sind UTM Koordinaten. Der Ostwert hat am Anfang zwei Ziffern für die Zone\n- Eine Angabe für Hemisphäre ist nicht vorhanden. (in Deutschland immer \"U\" bzw. Zone \"32U\")\n",
+            "syntax": "markdown",
+            "size": {
+              "width": "100%",
+              "height": "100%"
+            }
+          },
+          "size": {
+            "width": null,
+            "height": 313
+          },
+          "view": "preview"
+        },
+        "editor": {
+          "collapsed": false
+        }
+      },
+      "showingComment": true
+    },
+    "editor": {
+      "showParameters": true,
+      "showVariables": true,
+      "showServices": true,
+      "dialogWidth": "wide"
+    },
+    "imports": {
+      "code": "# import the standard library\nimport core, data, strings, time, math, fun, locale, regex, bin, decimals from 'std';\n",
+      "size": {
+        "width": 0,
+        "height": 102
+      },
+      "editor": {
+        "collapsed": false
+      }
+    },
+    "parameters": {
+      "parameters": {
+        "list": []
+      },
+      "editor": {
+        "collapsed": false
+      }
+    },
+    "variables": {
+      "variables": {
+        "list": []
+      },
+      "editor": {
+        "collapsed": false
+      }
+    },
+    "services": {
+      "services": {
+        "list": []
+      },
+      "editor": {
+        "collapsed": false
+      }
+    }
+  },
+  "steps": [
+    {
+      "id": "com.twineworks.tweakstreet.library.steps.input.csvinput_ea718cd8-0061-4c52-8bb8-ee72b6155f63",
+      "name": "CSV Input: WIndanlagen",
+      "type": "com.twineworks.tweakstreet.library.steps.input.csvinput",
+      "instanceCount": {
+        "widgetType": "expression/number",
+        "widgetData": {
+          "text": "1"
+        },
+        "code": "1"
+      },
+      "data": {
+        "meta": {
+          "name": "CSV Input: WIndanlagen",
+          "showingComment": false,
+          "comment": {
+            "markdown": {
+              "text": {
+                "text": "",
+                "syntax": "markdown",
+                "size": {
+                  "width": "100%",
+                  "height": "100%"
+                }
+              },
+              "size": {
+                "width": null,
+                "height": 160
+              },
+              "view": "edit"
+            },
+            "editor": {
+              "collapsed": true
+            }
+          }
+        },
+        "entryVariables": {
+          "variables": {
+            "list": []
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "tabs": {},
+        "fs": {
+          "widgetType": "expression/storage-ref",
+          "widgetData": {
+            "name": ""
+          },
+          "code": "nil"
+        },
+        "file": {
+          "widgetType": "expression/local-file",
+          "widgetData": {
+            "interpolation": true,
+            "text": "./data/input/WKA-OpenData_2019-12-10.csv",
+            "dialogIntent": "openFile"
+          },
+          "code": "'./data/input/WKA-OpenData_2019-12-10.csv'"
+        },
+        "compression": {
+          "widgetType": "expression/select",
+          "widgetData": {
+            "family": "expression/select/compression",
+            "value": "none"
+          },
+          "code": "'none'"
+        },
+        "charset": {
+          "widgetType": "expression/charset",
+          "widgetData": {
+            "value": "UTF-8"
+          },
+          "code": "'UTF-8'"
+        },
+        "textFileContent": {
+          "text": "",
+          "fetchButton": {
+            "value": "100"
+          },
+          "size": {
+            "width": 0,
+            "height": 180
+          },
+          "editor": {
+            "collapsed": true
+          }
+        },
+        "skipLines": {
+          "widgetType": "expression/number",
+          "widgetData": {
+            "text": "0"
+          },
+          "code": "0"
+        },
+        "rowLimit": {
+          "widgetType": "expression/nil",
+          "widgetData": {},
+          "code": "nil"
+        },
+        "fieldSeparator": {
+          "widgetType": "expression/separator",
+          "widgetData": {
+            "value": "tab"
+          },
+          "code": "\"\\t\""
+        },
+        "fieldEncloser": {
+          "widgetType": "expression/string",
+          "widgetData": {
+            "interpolation": true,
+            "text": ""
+          },
+          "code": "''"
+        },
+        "hasHeaderLine": {
+          "widgetType": "expression/checkbox-boolean",
+          "widgetData": {
+            "value": true
+          },
+          "code": "true"
+        },
+        "readFields": {
+          "readFields": {
+            "list": [
+              {
+                "name": "KREIS",
+                "type": "string",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "KREIS"
+                  },
+                  "code": "'KREIS'"
+                },
+                "conversion": {
+                  "widgetType": "expression/nil",
+                  "widgetData": {},
+                  "code": "nil"
+                }
+              },
+              {
+                "name": "Gemeinde",
+                "type": "string",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "Gemeinde"
+                  },
+                  "code": "'Gemeinde'"
+                },
+                "conversion": {
+                  "widgetType": "expression/nil",
+                  "widgetData": {},
+                  "code": "nil"
+                }
+              },
+              {
+                "name": "Anlage",
+                "type": "string",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "Anlage"
+                  },
+                  "code": "'Anlage'"
+                },
+                "conversion": {
+                  "widgetType": "expression/nil",
+                  "widgetData": {},
+                  "code": "nil"
+                }
+              },
+              {
+                "name": "Inbetriebnahme",
+                "type": "long",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "Inbetriebnahme"
+                  },
+                  "code": "'Inbetriebnahme'"
+                },
+                "conversion": {
+                  "widgetType": "expression/parse-number",
+                  "widgetData": {
+                    "pattern": {
+                      "widgetType": "expression/number-pattern",
+                      "widgetData": {
+                        "value": "0"
+                      },
+                      "code": "'0'"
+                    },
+                    "locale": {
+                      "widgetType": "expression/locale",
+                      "widgetData": {
+                        "value": "en-US"
+                      },
+                      "code": "'en-US'"
+                    },
+                    "trim": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": true
+                      },
+                      "code": "true"
+                    },
+                    "nilValue": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": ""
+                      },
+                      "code": "''"
+                    },
+                    "parseDecimal": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": false
+                      },
+                      "code": "false"
+                    },
+                    "editor": {
+                      "collapsed": true
+                    },
+                    "model": {}
+                  },
+                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('0', 'en-US', true, '', false)\n"
+                }
+              },
+              {
+                "name": "Leistung",
+                "type": "string",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "Leistung"
+                  },
+                  "code": "'Leistung'"
+                },
+                "conversion": {
+                  "widgetType": "expression/nil",
+                  "widgetData": {},
+                  "code": "nil"
+                }
+              },
+              {
+                "name": "Nabenhöhe",
+                "type": "double",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "Nabenhöhe"
+                  },
+                  "code": "'Nabenhöhe'"
+                },
+                "conversion": {
+                  "widgetType": "expression/parse-number",
+                  "widgetData": {
+                    "pattern": {
+                      "widgetType": "expression/number-pattern",
+                      "widgetData": {
+                        "value": "#,##0"
+                      },
+                      "code": "'#,##0'"
+                    },
+                    "locale": {
+                      "widgetType": "expression/locale",
+                      "widgetData": {
+                        "value": "en-US"
+                      },
+                      "code": "'en-US'"
+                    },
+                    "trim": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": true
+                      },
+                      "code": "true"
+                    },
+                    "nilValue": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": ""
+                      },
+                      "code": "''"
+                    },
+                    "parseDecimal": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": false
+                      },
+                      "code": "false"
+                    },
+                    "editor": {
+                      "collapsed": true
+                    },
+                    "model": {}
+                  },
+                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('#,##0', 'en-US', true, '', false)\n"
+                }
+              },
+              {
+                "name": "Rotordurchmesser",
+                "type": "double",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "Rotordurchmesser"
+                  },
+                  "code": "'Rotordurchmesser'"
+                },
+                "conversion": {
+                  "widgetType": "expression/parse-number",
+                  "widgetData": {
+                    "pattern": {
+                      "widgetType": "expression/number-pattern",
+                      "widgetData": {
+                        "value": "#,##0"
+                      },
+                      "code": "'#,##0'"
+                    },
+                    "locale": {
+                      "widgetType": "expression/locale",
+                      "widgetData": {
+                        "value": "en-US"
+                      },
+                      "code": "'en-US'"
+                    },
+                    "trim": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": true
+                      },
+                      "code": "true"
+                    },
+                    "nilValue": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": ""
+                      },
+                      "code": "''"
+                    },
+                    "parseDecimal": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": false
+                      },
+                      "code": "false"
+                    },
+                    "editor": {
+                      "collapsed": true
+                    },
+                    "model": {}
+                  },
+                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('#,##0', 'en-US', true, '', false)\n"
+                }
+              },
+              {
+                "name": "Ostwert",
+                "type": "long",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "Ostwert"
+                  },
+                  "code": "'Ostwert'"
+                },
+                "conversion": {
+                  "widgetType": "expression/parse-number",
+                  "widgetData": {
+                    "pattern": {
+                      "widgetType": "expression/number-pattern",
+                      "widgetData": {
+                        "value": "0"
+                      },
+                      "code": "'0'"
+                    },
+                    "locale": {
+                      "widgetType": "expression/locale",
+                      "widgetData": {
+                        "value": "en-US"
+                      },
+                      "code": "'en-US'"
+                    },
+                    "trim": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": true
+                      },
+                      "code": "true"
+                    },
+                    "nilValue": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": ""
+                      },
+                      "code": "''"
+                    },
+                    "parseDecimal": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": false
+                      },
+                      "code": "false"
+                    },
+                    "editor": {
+                      "collapsed": true
+                    },
+                    "model": {}
+                  },
+                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('0', 'en-US', true, '', false)\n"
+                }
+              },
+              {
+                "name": "Nordwert",
+                "type": "long",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "Nordwert"
+                  },
+                  "code": "'Nordwert'"
+                },
+                "conversion": {
+                  "widgetType": "expression/parse-number",
+                  "widgetData": {
+                    "pattern": {
+                      "widgetType": "expression/number-pattern",
+                      "widgetData": {
+                        "value": "0"
+                      },
+                      "code": "'0'"
+                    },
+                    "locale": {
+                      "widgetType": "expression/locale",
+                      "widgetData": {
+                        "value": "en-US"
+                      },
+                      "code": "'en-US'"
+                    },
+                    "trim": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": true
+                      },
+                      "code": "true"
+                    },
+                    "nilValue": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": ""
+                      },
+                      "code": "''"
+                    },
+                    "parseDecimal": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": false
+                      },
+                      "code": "false"
+                    },
+                    "editor": {
+                      "collapsed": true
+                    },
+                    "model": {}
+                  },
+                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('0', 'en-US', true, '', false)\n"
+                }
+              },
+              {
+                "name": "Status",
+                "type": "string",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "Status"
+                  },
+                  "code": "'Status'"
+                },
+                "conversion": {
+                  "widgetType": "expression/nil",
+                  "widgetData": {},
+                  "code": "nil"
+                }
+              }
+            ]
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "resultVariables": {
+          "variables": {
+            "list": []
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "outputFields": {
+          "outputFields": {
+            "list": []
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "editor": {
+          "showEntryVariables": false,
+          "showResultVariables": false,
+          "showOutputFields": false
+        },
+        "model": {}
+      },
+      "pos": {
+        "x": 234,
+        "y": 138
+      }
+    },
+    {
+      "id": "com.twineworks.tweakstreet.library.steps.flatmap.datatable_a61d6d93-5e8c-4dd7-ad61-566667f5cba6",
+      "name": "Data Table: status code",
+      "type": "com.twineworks.tweakstreet.library.steps.flatmap.datatable",
+      "instanceCount": {
+        "widgetType": "expression/number",
+        "widgetData": {
+          "text": "1"
+        },
+        "code": "1"
+      },
+      "data": {
+        "meta": {
+          "name": "Data Table: status code",
+          "showingComment": false,
+          "comment": {
+            "markdown": {
+              "text": {
+                "text": "",
+                "syntax": "markdown",
+                "size": {
+                  "width": "100%",
+                  "height": "100%"
+                }
+              },
+              "size": {
+                "width": null,
+                "height": 160
+              },
+              "view": "edit"
+            },
+            "editor": {
+              "collapsed": true
+            }
+          }
+        },
+        "entryVariables": {
+          "variables": {
+            "list": []
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "items": {
+          "widgetType": "expression/data-grid",
+          "widgetData": {
+            "fields": [
+              {
+                "id": "id",
+                "name": "status"
+              },
+              {
+                "id": "name",
+                "name": "status_code"
+              }
+            ],
+            "gen": {
+              "as": "rows",
+              "of": "dict",
+              "meta": false
+            },
+            "table": {
+              "list": [
+                {
+                  "fields": {
+                    "id": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": "im Gen.Verf."
+                      },
+                      "code": "'im Gen.Verf.'"
+                    },
+                    "name": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": "inaktiv"
+                      },
+                      "code": "'inaktiv'"
+                    }
+                  }
+                },
+                {
+                  "fields": {
+                    "id": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": "in Betrieb"
+                      },
+                      "code": "'in Betrieb'"
+                    },
+                    "name": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": "aktiv"
+                      },
+                      "code": "'aktiv'"
+                    }
+                  }
+                },
+                {
+                  "fields": {
+                    "id": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": "vor Inbetriebnahme"
+                      },
+                      "code": "'vor Inbetriebnahme'"
+                    },
+                    "name": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": "inaktiv"
+                      },
+                      "code": "'inaktiv'"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "code": "[{\n  :status 'im Gen.Verf.',\n  :status_code 'inaktiv'\n}, {\n  :status 'in Betrieb',\n  :status_code 'aktiv'\n}, {\n  :status 'vor Inbetriebnahme',\n  :status_code 'inaktiv'\n}]"
+        },
+        "resultVariables": {
+          "variables": {
+            "list": []
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "outputFields": {
+          "outputFields": {
+            "list": [
+              {
+                "name": "status",
+                "type": "string",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "results.row[:status]",
+                    "size": {
+                      "width": 0,
+                      "height": 36
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "results.row[:status]"
+                }
+              },
+              {
+                "name": "status_code",
+                "type": "string",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "results.row[:status_code]",
+                    "size": {
+                      "width": 0,
+                      "height": 36
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "results.row[:status_code]"
+                }
+              }
+            ]
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "editor": {
+          "showEntryVariables": false,
+          "showResultVariables": false,
+          "showOutputFields": true
+        },
+        "model": {}
+      },
+      "pos": {
+        "x": 474,
+        "y": 314
+      }
+    },
+    {
+      "id": "com.twineworks.tweakstreet.library.steps.streamlookup.streamlookup_366d5789-3eba-43c0-9874-2dd6507431b2",
+      "name": "Stream Lookup",
+      "type": "com.twineworks.tweakstreet.library.steps.streamlookup.streamlookup",
+      "instanceCount": {
+        "widgetType": "expression/number",
+        "widgetData": {
+          "text": "1"
+        },
+        "code": "1"
+      },
+      "data": {
+        "meta": {
+          "name": "Stream Lookup",
+          "showingComment": false,
+          "comment": {
+            "markdown": {
+              "text": {
+                "text": "",
+                "syntax": "markdown",
+                "size": {
+                  "width": "100%",
+                  "height": "100%"
+                }
+              },
+              "size": {
+                "width": null,
+                "height": 160
+              },
+              "view": "edit"
+            },
+            "editor": {
+              "collapsed": true
+            }
+          }
+        },
+        "entryVariables": {
+          "variables": {
+            "list": []
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "keyFields": {
+          "fieldPairs": {
+            "list": [
+              {
+                "left": {
+                  "value": {
+                    "gate": "in",
+                    "name": "Status"
+                  }
+                },
+                "right": {
+                  "value": {
+                    "gate": "lookup",
+                    "name": "status"
+                  }
+                }
+              }
+            ]
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "resultVariables": {
+          "variables": {
+            "list": []
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "outputFields": {
+          "outputFields": {
+            "list": [
+              {
+                "name": "lookup_status_code",
+                "type": "string",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "results.lookup[:status_code] default nil",
+                    "size": {
+                      "width": 0,
+                      "height": 36
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "results.lookup[:status_code] default nil"
+                }
+              }
+            ]
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "fetchFields": {
+          "value": "lookup_"
+        },
+        "editor": {
+          "showEntryVariables": false,
+          "showResultVariables": false,
+          "showOutputFields": true
+        },
+        "model": {}
+      },
+      "pos": {
+        "x": 474,
+        "y": 138
+      }
+    },
+    {
+      "id": "com.twineworks.tweakstreet.library.steps.map.dummy_9f319d65-576c-4ae5-bce6-f5ada276a956",
+      "name": "Dummy",
+      "type": "com.twineworks.tweakstreet.library.steps.map.dummy",
+      "instanceCount": {
+        "widgetType": "expression/number",
+        "widgetData": {
+          "text": "1"
+        },
+        "code": "1"
+      },
+      "data": {
+        "meta": {
+          "name": "Dummy",
+          "comment": {
+            "markdown": {
+              "text": {
+                "text": ""
+              },
+              "size": {
+                "width": null,
+                "height": 160
+              },
+              "editor": {
+                "collapsed": true
+              }
+            }
+          },
+          "showingComment": false
+        },
+        "editor": {}
+      },
+      "pos": {
+        "x": 1178,
+        "y": 138
+      }
+    },
+    {
+      "id": "com.twineworks.tweakstreet.library.steps.map.calculator_eafb616b-532b-4d3b-a0c7-d55817c49e14",
+      "name": "Calculator: split",
+      "type": "com.twineworks.tweakstreet.library.steps.map.calculator",
+      "instanceCount": {
+        "widgetType": "expression/number",
+        "widgetData": {
+          "text": "1"
+        },
+        "code": "1"
+      },
+      "data": {
+        "meta": {
+          "name": "Calculator: split",
+          "showingComment": false,
+          "comment": {
+            "markdown": {
+              "text": {
+                "text": "",
+                "syntax": "markdown",
+                "size": {
+                  "width": "100%",
+                  "height": "100%"
+                }
+              },
+              "size": {
+                "width": null,
+                "height": 160
+              },
+              "view": "edit"
+            },
+            "editor": {
+              "collapsed": true
+            }
+          }
+        },
+        "entryVariables": {
+          "variables": {
+            "list": [
+              {
+                "name": "splitter",
+                "type": "any",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "(x) -> strings.split(x, \" \")",
+                    "size": {
+                      "width": 0,
+                      "height": 36
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "(x) -> strings.split(x, \" \")"
+                }
+              }
+            ]
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "outputFields": {
+          "outputFields": {
+            "list": [
+              {
+                "name": "leistung",
+                "type": "long",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "vars.splitter(in.Leistung)[0]",
+                    "size": {
+                      "width": 0,
+                      "height": 36
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "vars.splitter(in.Leistung)[0]"
+                }
+              },
+              {
+                "name": "leistung_einheit",
+                "type": "string",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "vars.splitter(in.Leistung)[1]",
+                    "size": {
+                      "width": 0,
+                      "height": 36
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "vars.splitter(in.Leistung)[1]"
+                }
+              },
+              {
+                "name": "utm_zone",
+                "type": "long",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "strings.substring(in.Ostwert,0,2) ",
+                    "size": {
+                      "width": 0,
+                      "height": 36
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "strings.substring(in.Ostwert,0,2)"
+                }
+              },
+              {
+                "name": "Ostwert",
+                "type": "long",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "# the zone info at the beginning needs to be removed\nstrings.substring(in.Ostwert,2)",
+                    "size": {
+                      "width": 0,
+                      "height": 62
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "# the zone info at the beginning needs to be removed\nstrings.substring(in.Ostwert,2)\n"
+                }
+              }
+            ]
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "editor": {
+          "showEntryVariables": true,
+          "showOutputFields": true
+        },
+        "model": {}
+      },
+      "pos": {
+        "x": 698,
+        "y": 138
+      }
+    },
+    {
+      "id": "com.twineworks.tweakstreet.library.steps.map.calculator_867cc4b4-0057-435e-9fd3-1af49e691ea6",
+      "name": "Calculator: UTM to Lat/Long",
+      "type": "com.twineworks.tweakstreet.library.steps.map.calculator",
+      "instanceCount": {
+        "widgetType": "expression/number",
+        "widgetData": {
+          "text": "1"
+        },
+        "code": "1"
+      },
+      "data": {
+        "meta": {
+          "name": "Calculator: UTM to Lat/Long",
+          "showingComment": false,
+          "comment": {
+            "markdown": {
+              "text": {
+                "text": "",
+                "syntax": "markdown",
+                "size": {
+                  "width": "100%",
+                  "height": "100%"
+                }
+              },
+              "size": {
+                "width": null,
+                "height": 160
+              },
+              "view": "edit"
+            },
+            "editor": {
+              "collapsed": true
+            }
+          }
+        },
+        "entryVariables": {
+          "variables": {
+            "list": [
+              {
+                "name": "hemis",
+                "type": "any",
+                "value": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "U"
+                  },
+                  "code": "'U'"
+                }
+              },
+              {
+                "name": "utm2ll",
+                "type": "any",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "# converts UTM coordinates into lat/long values\n(easting, northing, zone, hemis) -> \n  let {\n    one_radian: 180/math.pi;\n    x: easting - 500000;\n    y: if hemis == 'S' then northing-1000000 else northing;\n    cm: (zone - 1) * 6 - 180 + 3;\n    a: 6378137.0;\n    f: 1 / 298.257223563;\n    e2: 1 - (1 - f) * (1 - f);\n    K0: 0.9996;\n    E2: e2 * e2;\n    E3: E2 * e2;\n    E_P2: e2 / (1.0 - e2);\n    _E: (1 - math.sqrt(1 - e2)) / (1 + math.sqrt(1 - e2));\n    _E2: _E * _E;\n    _E3: _E2 * _E;\n    _E4: _E3 * _E;\n    _E5: _E4 * _E;\n    M1: (1 - e2 / 4 - 3 * E2 / 64 - 5 * E3 / 256);\n    P2: (3 / 2 * _E - 27 / 32 * _E3 + 269 / 512 * _E5);\n    P3: (21 / 16 * _E2 - 55 / 32 * _E4);\n    P4: (151 / 96 * _E3 - 417 / 128 * _E5);\n    P5: (1097 / 512 * _E4);\n    m: y / K0;\n    mu: m / (a * M1);\n    p_rad: (mu + P2 * math.sin(2 * mu) + P3 * math.sin(4 * mu) + P4 * math.sin(6 * mu) + P5 * math.sin(8 * mu));\n    p_sin: math.sin(p_rad);\n    p_sin2: p_sin * p_sin;\n    p_cos: math.cos(p_rad);\n    p_tan: p_sin / p_cos;\n    p_tan2: p_tan * p_tan;\n    p_tan4: p_tan2 * p_tan2;\n    ep_sin: 1 - e2 * p_sin2;\n    ep_sin_sqrt: math.sqrt(1 - e2 * p_sin2);\n    n: a / ep_sin_sqrt;\n    r: (1 - e2) / ep_sin;\n    c: _E * p_cos ** 2;\n    c2: c * c;\n    d: x / (n * K0);\n    d2: d * d;\n    d3: d2 * d;\n    d4: d3 * d;\n    d5: d4 * d;\n    d6: d5 * d;\n    lat: (p_rad - (p_tan / r) * (d2 / 2 - d4 / 24 * (5 + 3 * p_tan2 + 10 * c - 4 * c2 - 9 * E_P2 )) + d6 / 720 * (61 + 90 * p_tan2 + 298 * c + 45 * p_tan4 - 252 * E_P2 - 3 * c2));\n    lon: (d - d3 / 6 * (1 + 2 * p_tan2 + c) + d5 / 120 * (5 - 2 * c + 28 * p_tan2 - 3 * c2 + 8 * E_P2 + 24 * p_tan4)) / p_cos;\n  }\n  {\n    :latitude_decimal lat * one_radian,\n    :longitude_decimal lon * one_radian + cm,\n  }",
+                    "size": {
+                      "width": 0,
+                      "height": 768
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "# converts UTM coordinates into lat/long values\n(easting, northing, zone, hemis) -> \n  let {\n    one_radian: 180/math.pi;\n    x: easting - 500000;\n    y: if hemis == 'S' then northing-1000000 else northing;\n    cm: (zone - 1) * 6 - 180 + 3;\n    a: 6378137.0;\n    f: 1 / 298.257223563;\n    e2: 1 - (1 - f) * (1 - f);\n    K0: 0.9996;\n    E2: e2 * e2;\n    E3: E2 * e2;\n    E_P2: e2 / (1.0 - e2);\n    _E: (1 - math.sqrt(1 - e2)) / (1 + math.sqrt(1 - e2));\n    _E2: _E * _E;\n    _E3: _E2 * _E;\n    _E4: _E3 * _E;\n    _E5: _E4 * _E;\n    M1: (1 - e2 / 4 - 3 * E2 / 64 - 5 * E3 / 256);\n    P2: (3 / 2 * _E - 27 / 32 * _E3 + 269 / 512 * _E5);\n    P3: (21 / 16 * _E2 - 55 / 32 * _E4);\n    P4: (151 / 96 * _E3 - 417 / 128 * _E5);\n    P5: (1097 / 512 * _E4);\n    m: y / K0;\n    mu: m / (a * M1);\n    p_rad: (mu + P2 * math.sin(2 * mu) + P3 * math.sin(4 * mu) + P4 * math.sin(6 * mu) + P5 * math.sin(8 * mu));\n    p_sin: math.sin(p_rad);\n    p_sin2: p_sin * p_sin;\n    p_cos: math.cos(p_rad);\n    p_tan: p_sin / p_cos;\n    p_tan2: p_tan * p_tan;\n    p_tan4: p_tan2 * p_tan2;\n    ep_sin: 1 - e2 * p_sin2;\n    ep_sin_sqrt: math.sqrt(1 - e2 * p_sin2);\n    n: a / ep_sin_sqrt;\n    r: (1 - e2) / ep_sin;\n    c: _E * p_cos ** 2;\n    c2: c * c;\n    d: x / (n * K0);\n    d2: d * d;\n    d3: d2 * d;\n    d4: d3 * d;\n    d5: d4 * d;\n    d6: d5 * d;\n    lat: (p_rad - (p_tan / r) * (d2 / 2 - d4 / 24 * (5 + 3 * p_tan2 + 10 * c - 4 * c2 - 9 * E_P2 )) + d6 / 720 * (61 + 90 * p_tan2 + 298 * c + 45 * p_tan4 - 252 * E_P2 - 3 * c2));\n    lon: (d - d3 / 6 * (1 + 2 * p_tan2 + c) + d5 / 120 * (5 - 2 * c + 28 * p_tan2 - 3 * c2 + 8 * E_P2 + 24 * p_tan4)) / p_cos;\n  }\n  {\n    :latitude_decimal lat * one_radian,\n    :longitude_decimal lon * one_radian + cm,\n  }\n"
+                }
+              },
+              {
+                "name": "decdeg2deg",
+                "type": "any",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "# convert degrees in decimal format to degrees, minutes and seconds\n(degrees_decimal) ->\n  let {\n    minutes: (degrees_decimal - degrees_decimal as long) * 60;\n    seconds: (minutes - minutes as long) * 60;\n  }\n  {\n    :degrees degrees_decimal as long,\n    :minutes minutes as long,\n    :seconds decimals.with_scale(seconds,1) as double\n  } ",
+                    "size": {
+                      "width": 0,
+                      "height": 239
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "# convert degrees in decimal format to degrees, minutes and seconds\n(degrees_decimal) ->\n  let {\n    minutes: (degrees_decimal - degrees_decimal as long) * 60;\n    seconds: (minutes - minutes as long) * 60;\n  }\n  {\n    :degrees degrees_decimal as long,\n    :minutes minutes as long,\n    :seconds decimals.with_scale(seconds,1) as double\n  }\n"
+                }
+              }
+            ]
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "outputFields": {
+          "outputFields": {
+            "list": [
+              {
+                "name": "utm2ll_result",
+                "type": "any",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "vars.utm2ll(in.Ostwert, in.Nordwert, in.utm_zone, entry_vars.hemis)",
+                    "size": {
+                      "width": 0,
+                      "height": 36
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "vars.utm2ll(in.Ostwert, in.Nordwert, in.utm_zone, entry_vars.hemis)"
+                }
+              },
+              {
+                "name": "latitude_degrees",
+                "type": "any",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "entry_vars.decdeg2deg(utm2ll_result[:latitude_decimal])",
+                    "size": {
+                      "width": 0,
+                      "height": 36
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "entry_vars.decdeg2deg(utm2ll_result[:latitude_decimal])"
+                }
+              },
+              {
+                "name": "longitude_degrees",
+                "type": "any",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "entry_vars.decdeg2deg(utm2ll_result[:longitude_decimal])",
+                    "size": {
+                      "width": 0,
+                      "height": 36
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "entry_vars.decdeg2deg(utm2ll_result[:longitude_decimal])"
+                }
+              }
+            ]
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "editor": {
+          "showEntryVariables": true,
+          "showOutputFields": true,
+          "dialogWidth": "wide"
+        },
+        "model": {}
+      },
+      "pos": {
+        "x": 938,
+        "y": 138
+      }
+    }
+  ],
+  "hops": [
+    {
+      "id": "29561f9f-987e-4714-a6c4-3a65f6267e16",
+      "fromStep": "com.twineworks.tweakstreet.library.steps.input.csvinput_ea718cd8-0061-4c52-8bb8-ee72b6155f63",
+      "toStep": "com.twineworks.tweakstreet.library.steps.streamlookup.streamlookup_366d5789-3eba-43c0-9874-2dd6507431b2",
+      "fromGate": "out",
+      "toGate": "in",
+      "disabled": false,
+      "partitioner": {
+        "widgetType": "expression/code",
+        "widgetData": {
+          "text": ""
+        },
+        "code": "nil"
+      }
+    },
+    {
+      "id": "55812c00-0d6e-41ba-96bd-f376dbf8617f",
+      "fromStep": "com.twineworks.tweakstreet.library.steps.flatmap.datatable_a61d6d93-5e8c-4dd7-ad61-566667f5cba6",
+      "toStep": "com.twineworks.tweakstreet.library.steps.streamlookup.streamlookup_366d5789-3eba-43c0-9874-2dd6507431b2",
+      "fromGate": "out",
+      "toGate": "lookup",
+      "disabled": false,
+      "partitioner": {
+        "widgetType": "expression/code",
+        "widgetData": {
+          "text": ""
+        },
+        "code": "nil"
+      }
+    },
+    {
+      "id": "61164f26-edc4-40d8-ae6a-660dfa814ad1",
+      "fromStep": "com.twineworks.tweakstreet.library.steps.streamlookup.streamlookup_366d5789-3eba-43c0-9874-2dd6507431b2",
+      "toStep": "com.twineworks.tweakstreet.library.steps.map.calculator_eafb616b-532b-4d3b-a0c7-d55817c49e14",
+      "fromGate": "out",
+      "toGate": "in",
+      "disabled": false,
+      "partitioner": {
+        "widgetType": "expression/code",
+        "widgetData": {
+          "text": ""
+        },
+        "code": "nil"
+      }
+    },
+    {
+      "id": "5ffd4806-bc4d-443b-8b71-e4c978fd3e89",
+      "fromStep": "com.twineworks.tweakstreet.library.steps.map.calculator_867cc4b4-0057-435e-9fd3-1af49e691ea6",
+      "toStep": "com.twineworks.tweakstreet.library.steps.map.dummy_9f319d65-576c-4ae5-bce6-f5ada276a956",
+      "fromGate": "out",
+      "toGate": "in",
+      "disabled": false,
+      "partitioner": {
+        "widgetType": "expression/code",
+        "widgetData": {
+          "text": ""
+        },
+        "code": "nil"
+      }
+    },
+    {
+      "id": "f09e5a58-a2a5-4d4f-86f4-2308d6e37230",
+      "fromStep": "com.twineworks.tweakstreet.library.steps.map.calculator_eafb616b-532b-4d3b-a0c7-d55817c49e14",
+      "toStep": "com.twineworks.tweakstreet.library.steps.map.calculator_867cc4b4-0057-435e-9fd3-1af49e691ea6",
+      "fromGate": "out",
+      "toGate": "in",
+      "disabled": false,
+      "partitioner": {
+        "widgetType": "expression/code",
+        "widgetData": {
+          "text": ""
+        },
+        "code": "nil"
+      }
+    }
+  ]
+}
