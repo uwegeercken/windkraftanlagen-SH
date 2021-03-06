@@ -32,10 +32,10 @@
       "dialogWidth": "wide"
     },
     "imports": {
-      "code": "# import the standard library\nimport core, data, strings, time, math, fun, locale, regex, bin, decimals from 'std';\n",
+      "code": "# import the standard library\nimport strings from 'std';\n\n# importieren des Moduls zum konvertieren\nimport vars as converter from './utm_conversion.tsm';\n",
       "size": {
         "width": 0,
-        "height": 102
+        "height": 121
       },
       "editor": {
         "collapsed": false
@@ -81,11 +81,11 @@
       "data": {
         "meta": {
           "name": "CSV Input: WIndanlagen",
-          "showingComment": false,
+          "showingComment": true,
           "comment": {
             "markdown": {
               "text": {
-                "text": "",
+                "text": "##### INFO\n\nEs ist zusätzlich zur CSV Datei auch ein Excel Sheet vorhanden, es ist aber etwas anders aufgebaut.",
                 "syntax": "markdown",
                 "size": {
                   "width": "100%",
@@ -94,12 +94,12 @@
               },
               "size": {
                 "width": null,
-                "height": 160
+                "height": 115
               },
-              "view": "edit"
+              "view": "preview"
             },
             "editor": {
-              "collapsed": true
+              "collapsed": false
             }
           }
         },
@@ -1103,11 +1103,11 @@
       "data": {
         "meta": {
           "name": "Calculator: UTM to Lat/Long",
-          "showingComment": false,
+          "showingComment": true,
           "comment": {
             "markdown": {
               "text": {
-                "text": "",
+                "text": "##### INFO\n\ndas Modul \"utm_conversion.tsm\" enthält die Rechenroutinen zum konvertieren von UTM Koordinaten in Längengrad/Breitengrad \nund die Konvertierung von den dezimalen Werten in Grad, Minuten und Sekunden.",
                 "syntax": "markdown",
                 "size": {
                   "width": "100%",
@@ -1116,63 +1116,18 @@
               },
               "size": {
                 "width": null,
-                "height": 160
+                "height": 127
               },
-              "view": "edit"
+              "view": "preview"
             },
             "editor": {
-              "collapsed": true
+              "collapsed": false
             }
           }
         },
         "entryVariables": {
           "variables": {
-            "list": [
-              {
-                "name": "hemis",
-                "type": "any",
-                "value": {
-                  "widgetType": "expression/string",
-                  "widgetData": {
-                    "interpolation": true,
-                    "text": "U"
-                  },
-                  "code": "'U'"
-                }
-              },
-              {
-                "name": "utm2ll",
-                "type": "any",
-                "value": {
-                  "widgetType": "expression/code",
-                  "widgetData": {
-                    "text": "# converts UTM coordinates into lat/long values\n(easting, northing, zone, hemis) -> \n  let {\n    one_radian: 180/math.pi;\n    x: easting - 500000;\n    y: if hemis == 'S' then northing-1000000 else northing;\n    cm: (zone - 1) * 6 - 180 + 3;\n    a: 6378137.0;\n    f: 1 / 298.257223563;\n    e2: 1 - (1 - f) * (1 - f);\n    K0: 0.9996;\n    E2: e2 * e2;\n    E3: E2 * e2;\n    E_P2: e2 / (1.0 - e2);\n    _E: (1 - math.sqrt(1 - e2)) / (1 + math.sqrt(1 - e2));\n    _E2: _E * _E;\n    _E3: _E2 * _E;\n    _E4: _E3 * _E;\n    _E5: _E4 * _E;\n    M1: (1 - e2 / 4 - 3 * E2 / 64 - 5 * E3 / 256);\n    P2: (3 / 2 * _E - 27 / 32 * _E3 + 269 / 512 * _E5);\n    P3: (21 / 16 * _E2 - 55 / 32 * _E4);\n    P4: (151 / 96 * _E3 - 417 / 128 * _E5);\n    P5: (1097 / 512 * _E4);\n    m: y / K0;\n    mu: m / (a * M1);\n    p_rad: (mu + P2 * math.sin(2 * mu) + P3 * math.sin(4 * mu) + P4 * math.sin(6 * mu) + P5 * math.sin(8 * mu));\n    p_sin: math.sin(p_rad);\n    p_sin2: p_sin * p_sin;\n    p_cos: math.cos(p_rad);\n    p_tan: p_sin / p_cos;\n    p_tan2: p_tan * p_tan;\n    p_tan4: p_tan2 * p_tan2;\n    ep_sin: 1 - e2 * p_sin2;\n    ep_sin_sqrt: math.sqrt(1 - e2 * p_sin2);\n    n: a / ep_sin_sqrt;\n    r: (1 - e2) / ep_sin;\n    c: _E * p_cos ** 2;\n    c2: c * c;\n    d: x / (n * K0);\n    d2: d * d;\n    d3: d2 * d;\n    d4: d3 * d;\n    d5: d4 * d;\n    d6: d5 * d;\n    lat: (p_rad - (p_tan / r) * (d2 / 2 - d4 / 24 * (5 + 3 * p_tan2 + 10 * c - 4 * c2 - 9 * E_P2 )) + d6 / 720 * (61 + 90 * p_tan2 + 298 * c + 45 * p_tan4 - 252 * E_P2 - 3 * c2));\n    lon: (d - d3 / 6 * (1 + 2 * p_tan2 + c) + d5 / 120 * (5 - 2 * c + 28 * p_tan2 - 3 * c2 + 8 * E_P2 + 24 * p_tan4)) / p_cos;\n  }\n  {\n    :latitude_decimal lat * one_radian,\n    :longitude_decimal lon * one_radian + cm,\n  }",
-                    "size": {
-                      "width": 0,
-                      "height": 768
-                    },
-                    "syntax": "tweakflow"
-                  },
-                  "code": "# converts UTM coordinates into lat/long values\n(easting, northing, zone, hemis) -> \n  let {\n    one_radian: 180/math.pi;\n    x: easting - 500000;\n    y: if hemis == 'S' then northing-1000000 else northing;\n    cm: (zone - 1) * 6 - 180 + 3;\n    a: 6378137.0;\n    f: 1 / 298.257223563;\n    e2: 1 - (1 - f) * (1 - f);\n    K0: 0.9996;\n    E2: e2 * e2;\n    E3: E2 * e2;\n    E_P2: e2 / (1.0 - e2);\n    _E: (1 - math.sqrt(1 - e2)) / (1 + math.sqrt(1 - e2));\n    _E2: _E * _E;\n    _E3: _E2 * _E;\n    _E4: _E3 * _E;\n    _E5: _E4 * _E;\n    M1: (1 - e2 / 4 - 3 * E2 / 64 - 5 * E3 / 256);\n    P2: (3 / 2 * _E - 27 / 32 * _E3 + 269 / 512 * _E5);\n    P3: (21 / 16 * _E2 - 55 / 32 * _E4);\n    P4: (151 / 96 * _E3 - 417 / 128 * _E5);\n    P5: (1097 / 512 * _E4);\n    m: y / K0;\n    mu: m / (a * M1);\n    p_rad: (mu + P2 * math.sin(2 * mu) + P3 * math.sin(4 * mu) + P4 * math.sin(6 * mu) + P5 * math.sin(8 * mu));\n    p_sin: math.sin(p_rad);\n    p_sin2: p_sin * p_sin;\n    p_cos: math.cos(p_rad);\n    p_tan: p_sin / p_cos;\n    p_tan2: p_tan * p_tan;\n    p_tan4: p_tan2 * p_tan2;\n    ep_sin: 1 - e2 * p_sin2;\n    ep_sin_sqrt: math.sqrt(1 - e2 * p_sin2);\n    n: a / ep_sin_sqrt;\n    r: (1 - e2) / ep_sin;\n    c: _E * p_cos ** 2;\n    c2: c * c;\n    d: x / (n * K0);\n    d2: d * d;\n    d3: d2 * d;\n    d4: d3 * d;\n    d5: d4 * d;\n    d6: d5 * d;\n    lat: (p_rad - (p_tan / r) * (d2 / 2 - d4 / 24 * (5 + 3 * p_tan2 + 10 * c - 4 * c2 - 9 * E_P2 )) + d6 / 720 * (61 + 90 * p_tan2 + 298 * c + 45 * p_tan4 - 252 * E_P2 - 3 * c2));\n    lon: (d - d3 / 6 * (1 + 2 * p_tan2 + c) + d5 / 120 * (5 - 2 * c + 28 * p_tan2 - 3 * c2 + 8 * E_P2 + 24 * p_tan4)) / p_cos;\n  }\n  {\n    :latitude_decimal lat * one_radian,\n    :longitude_decimal lon * one_radian + cm,\n  }\n"
-                }
-              },
-              {
-                "name": "decdeg2deg",
-                "type": "any",
-                "value": {
-                  "widgetType": "expression/code",
-                  "widgetData": {
-                    "text": "# convert degrees in decimal format to degrees, minutes and seconds\n(degrees_decimal) ->\n  let {\n    minutes: (degrees_decimal - degrees_decimal as long) * 60;\n    seconds: (minutes - minutes as long) * 60;\n  }\n  {\n    :degrees degrees_decimal as long,\n    :minutes minutes as long,\n    :seconds decimals.with_scale(seconds,1) as double\n  } ",
-                    "size": {
-                      "width": 0,
-                      "height": 239
-                    },
-                    "syntax": "tweakflow"
-                  },
-                  "code": "# convert degrees in decimal format to degrees, minutes and seconds\n(degrees_decimal) ->\n  let {\n    minutes: (degrees_decimal - degrees_decimal as long) * 60;\n    seconds: (minutes - minutes as long) * 60;\n  }\n  {\n    :degrees degrees_decimal as long,\n    :minutes minutes as long,\n    :seconds decimals.with_scale(seconds,1) as double\n  }\n"
-                }
-              }
-            ]
+            "list": []
           },
           "editor": {
             "collapsed": false
@@ -1187,46 +1142,30 @@
                 "value": {
                   "widgetType": "expression/code",
                   "widgetData": {
-                    "text": "vars.utm2ll(in.Ostwert, in.Nordwert, in.`UTM Zone`, entry_vars.hemis)",
+                    "text": "converter.utm2ll(in.Ostwert, in.Nordwert, in.`UTM Zone`, converter.hemis)",
                     "size": {
                       "width": 0,
                       "height": 36
                     },
                     "syntax": "tweakflow"
                   },
-                  "code": "vars.utm2ll(in.Ostwert, in.Nordwert, in.`UTM Zone`, entry_vars.hemis)"
+                  "code": "converter.utm2ll(in.Ostwert, in.Nordwert, in.`UTM Zone`, converter.hemis)"
                 }
               },
               {
-                "name": "Breitengrad",
+                "name": "Koordinaten",
                 "type": "any",
                 "value": {
                   "widgetType": "expression/code",
                   "widgetData": {
-                    "text": "entry_vars.decdeg2deg(Konvertierung[:latitude_decimal])",
+                    "text": "converter.decdeg2deg(Konvertierung[:latitude_decimal],Konvertierung[:longitude_decimal])",
                     "size": {
                       "width": 0,
                       "height": 36
                     },
                     "syntax": "tweakflow"
                   },
-                  "code": "entry_vars.decdeg2deg(Konvertierung[:latitude_decimal])"
-                }
-              },
-              {
-                "name": "Längengrad",
-                "type": "any",
-                "value": {
-                  "widgetType": "expression/code",
-                  "widgetData": {
-                    "text": "entry_vars.decdeg2deg(Konvertierung[:longitude_decimal])",
-                    "size": {
-                      "width": 0,
-                      "height": 36
-                    },
-                    "syntax": "tweakflow"
-                  },
-                  "code": "entry_vars.decdeg2deg(Konvertierung[:longitude_decimal])"
+                  "code": "converter.decdeg2deg(Konvertierung[:latitude_decimal],Konvertierung[:longitude_decimal])"
                 }
               }
             ]
@@ -1238,7 +1177,7 @@
         "editor": {
           "showEntryVariables": true,
           "showOutputFields": true,
-          "dialogWidth": "wide"
+          "dialogWidth": "stretch"
         },
         "model": {}
       },
