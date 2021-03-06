@@ -6,7 +6,7 @@
       "comment": {
         "markdown": {
           "text": {
-            "text": "##### INFO\n\nFolgende Spalten sind enthalten:\n\n- Kreis - Name des Kreises, auf dessen Gebiet sich die Anlage befindet\n- Gemeinde - Name der Gemeinde, auf deren Gebiet sich die Anlage befindet\n- Anlage - Bezeichnung der Anlage\n- Inbetriebnahme - Jahr der Inbetriebnahme\n- Leistung - Leistung der Anlage (Zahl mit Maßeinheit, Dezimaltrennzeichen ist Punkt)\n- Nabenhöhe - Nabenhöhe in Metern - Dezimaltrenner ist Komma, bei in Genehmigung befindlichen Anlagen kann Text enthalten sein\n- Rotordurchmesser - Rotordurchmesser in Metern - Dezimaltrenner ist Komma, bei in Genehmigung befindlichen Anlagen kann Text enthalten sein\n- Ostwert - Ostwert bzw. Rechtswert der geographischen Position\n- Nordwert - Nordwert bzw. Hochwert der geographischen Position\n- Status - Status der Angabe. Hier sind folgende Werte möglich: \"in Betrieb\", \"vor Inbetriebnahme\", \"im Gen.Verf.\" = im Genehmigungsverfahren\n\nNotes: \n- Als Koordinatenbezugssystem (KBS bzw. CRS) wird EPSG:4647 verwendet.\n- Ostwert und Nordwert sind UTM Koordinaten. Der Ostwert hat am Anfang zwei Ziffern für die Zone\n- Eine Angabe für Hemisphäre ist nicht vorhanden. (in Deutschland immer \"U\" bzw. Zone \"32U\")\n",
+            "text": "##### INFO\n\nFolgende Spalten sind enthalten:\n\n- Kreis - Name des Kreises, auf dessen Gebiet sich die Anlage befindet\n- Gemeinde - Name der Gemeinde, auf deren Gebiet sich die Anlage befindet\n- Anlage - Bezeichnung der Anlage\n- Inbetriebnahme - Jahr der Inbetriebnahme\n- Leistung - Leistung der Anlage (Zahl mit Maßeinheit, Dezimaltrennzeichen ist Punkt)\n- Nabenhöhe - Nabenhöhe in Metern - Dezimaltrenner ist Komma, bei in Genehmigung befindlichen Anlagen kann Text enthalten sein\n- Rotordurchmesser - Rotordurchmesser in Metern - Dezimaltrenner ist Komma, bei in Genehmigung befindlichen Anlagen kann Text enthalten sein\n- Ostwert - Ostwert bzw. Rechtswert der geographischen Position\n- Nordwert - Nordwert bzw. Hochwert der geographischen Position\n- Status - Status der Angabe. Hier sind folgende Werte möglich: \"in Betrieb\", \"vor Inbetriebnahme\", \"im Gen.Verf.\" = im Genehmigungsverfahren\n\nNotes: \n- Als Koordinatenbezugssystem (KBS bzw. CRS) wird EPSG:4647 verwendet.\n- Ostwert und Nordwert sind UTM Koordinaten. Der Ostwert hat am Anfang zwei Ziffern für die Zone\n- Eine Angabe für Hemisphäre ist nicht vorhanden. (in Deutschland immer \"U\" bzw. Zone \"32U\")\n- Die CSV Datei hat weniger Spalten als das Excel Sheet und auch eine andere Aufteilung\n\n",
             "syntax": "markdown",
             "size": {
               "width": "100%",
@@ -15,7 +15,7 @@
           },
           "size": {
             "width": null,
-            "height": 313
+            "height": 572
           },
           "view": "preview"
         },
