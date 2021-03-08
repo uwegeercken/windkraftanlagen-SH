@@ -940,7 +940,7 @@
         "editor": {}
       },
       "pos": {
-        "x": 1114,
+        "x": 1098,
         "y": 122
       }
     },
@@ -1085,14 +1085,14 @@
         "model": {}
       },
       "pos": {
-        "x": 602,
+        "x": 634,
         "y": 122
       }
     },
     {
-      "id": "com.twineworks.tweakstreet.library.steps.map.calculator_867cc4b4-0057-435e-9fd3-1af49e691ea6",
-      "name": "Calculator: UTM to Lat/Long using module",
-      "type": "com.twineworks.tweakstreet.library.steps.map.calculator",
+      "id": "com.twineworks.tweakstreet.library.steps.map.python_6ef80a10-5886-4017-9870-bbded80a6ab6",
+      "name": "Python",
+      "type": "com.twineworks.tweakstreet.library.steps.map.python",
       "instanceCount": {
         "widgetType": "expression/number",
         "widgetData": {
@@ -1102,12 +1102,12 @@
       },
       "data": {
         "meta": {
-          "name": "Calculator: UTM to Lat/Long using module",
-          "showingComment": true,
+          "name": "Python",
+          "showingComment": false,
           "comment": {
             "markdown": {
               "text": {
-                "text": "##### INFO\n\ndas Modul \"utm_conversion.tsm\" enthält die Rechenroutinen zum konvertieren von UTM Koordinaten in Längengrad/Breitengrad \nund die Konvertierung von den dezimalen Werten in Grad, Minuten und Sekunden.",
+                "text": "",
                 "syntax": "markdown",
                 "size": {
                   "width": "100%",
@@ -1116,12 +1116,12 @@
               },
               "size": {
                 "width": null,
-                "height": 127
+                "height": 160
               },
-              "view": "preview"
+              "view": "edit"
             },
             "editor": {
-              "collapsed": false
+              "collapsed": true
             }
           }
         },
@@ -1133,39 +1133,89 @@
             "collapsed": false
           }
         },
+        "tabs": {},
+        "sourceMode": {
+          "value": "inline"
+        },
+        "input": {
+          "widgetType": "expression/code",
+          "widgetData": {
+            "text": "row",
+            "size": {
+              "width": 0,
+              "height": 36
+            },
+            "syntax": "tweakflow"
+          },
+          "code": "row"
+        },
+        "tzEncoding": {
+          "widgetType": "expression/select",
+          "widgetData": {
+            "family": "com.twineworks.tweakstreet.library.steps.map.python/tzEncoding",
+            "value": "naive"
+          },
+          "code": "'naive'"
+        },
+        "defaultTz": {
+          "widgetType": "expression/timezone",
+          "widgetData": {
+            "value": "Europe/Zurich"
+          },
+          "code": "'Europe/Zurich'"
+        },
+        "script": {
+          "widgetType": "expression/text",
+          "widgetData": {
+            "text": "import sys\nsys.path.append('${flow.location.dirname}')\n\nfrom utm_c import utm_\ngc=utm_('wgs84')\n\n# called for every input row passing configured input value\ndef process(input):\n    return gc.utm2ll(input['Ostwert'], input['Nordwert'], input['UTM Zone'],'N')\n",
+            "size": {
+              "width": 0,
+              "height": 300
+            },
+            "syntax": "python",
+            "lineSeparator": "\n",
+            "interpolation": true
+          },
+          "code": "let {\n  string literal_0: 'import sys\nsys.path.append(''';\n  string interpolation_1: flow.location.dirname;\n  string literal_2: ''')\n\nfrom utm_c import utm_\ngc=utm_(''wgs84'')\n\n# called for every input row passing configured input value\ndef process(input):\n    return gc.utm2ll(input[''Ostwert''], input[''Nordwert''], input[''UTM Zone''],''N'')\n';\n}\nliteral_0 .. interpolation_1 .. literal_2"
+        },
+        "scriptFile": {
+          "widgetType": "expression/local-file",
+          "widgetData": {
+            "interpolation": true,
+            "text": "./utm_c.py",
+            "dialogIntent": "openFile"
+          },
+          "code": "'./utm_c.py'"
+        },
+        "pythonExec": {
+          "widgetType": "expression/local-file",
+          "widgetData": {
+            "interpolation": true,
+            "text": "",
+            "dialogIntent": "openFile"
+          },
+          "code": "''"
+        },
+        "resultVariables": {
+          "variables": {
+            "list": []
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
         "outputFields": {
           "outputFields": {
             "list": [
               {
-                "name": "Konvertierung",
+                "name": "ret",
                 "type": "any",
                 "value": {
-                  "widgetType": "expression/code",
+                  "widgetType": "expression/result-ref",
                   "widgetData": {
-                    "text": "converter.utm2ll(in.Ostwert, in.Nordwert, in.`UTM Zone`, converter.hemis)",
-                    "size": {
-                      "width": 0,
-                      "height": 36
-                    },
-                    "syntax": "tweakflow"
+                    "value": "::results.ret"
                   },
-                  "code": "converter.utm2ll(in.Ostwert, in.Nordwert, in.`UTM Zone`, converter.hemis)"
-                }
-              },
-              {
-                "name": "Koordinaten",
-                "type": "any",
-                "value": {
-                  "widgetType": "expression/code",
-                  "widgetData": {
-                    "text": "converter.decdeg2deg(Konvertierung[:latitude_decimal],Konvertierung[:longitude_decimal])",
-                    "size": {
-                      "width": 0,
-                      "height": 36
-                    },
-                    "syntax": "tweakflow"
-                  },
-                  "code": "converter.decdeg2deg(Konvertierung[:latitude_decimal],Konvertierung[:longitude_decimal])"
+                  "code": "::results.ret"
                 }
               }
             ]
@@ -1175,9 +1225,9 @@
           }
         },
         "editor": {
-          "showEntryVariables": true,
-          "showOutputFields": true,
-          "dialogWidth": "stretch"
+          "showEntryVariables": false,
+          "showResultVariables": false,
+          "showOutputFields": true
         },
         "model": {}
       },
@@ -1234,8 +1284,8 @@
       }
     },
     {
-      "id": "5ffd4806-bc4d-443b-8b71-e4c978fd3e89",
-      "fromStep": "com.twineworks.tweakstreet.library.steps.map.calculator_867cc4b4-0057-435e-9fd3-1af49e691ea6",
+      "id": "e8586a67-bd46-4e60-b4be-35b705a85e68",
+      "fromStep": "com.twineworks.tweakstreet.library.steps.map.python_6ef80a10-5886-4017-9870-bbded80a6ab6",
       "toStep": "com.twineworks.tweakstreet.library.steps.map.dummy_9f319d65-576c-4ae5-bce6-f5ada276a956",
       "fromGate": "out",
       "toGate": "in",
@@ -1249,9 +1299,9 @@
       }
     },
     {
-      "id": "f09e5a58-a2a5-4d4f-86f4-2308d6e37230",
+      "id": "624bb567-8636-4615-ab30-ad7659e617c4",
       "fromStep": "com.twineworks.tweakstreet.library.steps.map.calculator_eafb616b-532b-4d3b-a0c7-d55817c49e14",
-      "toStep": "com.twineworks.tweakstreet.library.steps.map.calculator_867cc4b4-0057-435e-9fd3-1af49e691ea6",
+      "toStep": "com.twineworks.tweakstreet.library.steps.map.python_6ef80a10-5886-4017-9870-bbded80a6ab6",
       "fromGate": "out",
       "toGate": "in",
       "disabled": false,

@@ -98,6 +98,10 @@ class utm_:
         return easting, northing, zone, hemi
 
     def utm2ll(self, easting, northing, zone, hemi):
+        
+        if easting is None or northing is None or zone is None or hemi is None:
+            return None
+            
         K0=0.9996
         E2 =self.e2 * self.e2
         E3 = E2 * self.e2
