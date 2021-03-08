@@ -1,6 +1,6 @@
 {
   "type": "data-flow",
-  "appVersion": "1.14.2",
+  "appVersion": "1.14.3",
   "properties": {
     "meta": {
       "comment": {
@@ -32,10 +32,10 @@
       "dialogWidth": "wide"
     },
     "imports": {
-      "code": "# import the standard library\nimport strings from 'std';\n\n# importieren des Moduls zum konvertieren\nimport vars as converter from './utm_conversion.tsm';\n",
+      "code": "# import the standard library\nimport strings from 'std';\n\n# importieren des Moduls zum konvertieren\nimport vars as converter from './utm_conversion.tsm';\n\n# import datamelt library: see https://github.com/uwegeercken/tweakflow-datamelt\nimport coordinates from 'datamelt/coords.tf';\n",
       "size": {
         "width": 0,
-        "height": 121
+        "height": 211
       },
       "editor": {
         "collapsed": false
@@ -598,8 +598,8 @@
         "model": {}
       },
       "pos": {
-        "x": 234,
-        "y": 138
+        "x": 170,
+        "y": 122
       }
     },
     {
@@ -788,8 +788,8 @@
         "model": {}
       },
       "pos": {
-        "x": 474,
-        "y": 314
+        "x": 410,
+        "y": 330
       }
     },
     {
@@ -903,8 +903,8 @@
         "model": {}
       },
       "pos": {
-        "x": 474,
-        "y": 138
+        "x": 410,
+        "y": 122
       }
     },
     {
@@ -940,8 +940,8 @@
         "editor": {}
       },
       "pos": {
-        "x": 1178,
-        "y": 138
+        "x": 1114,
+        "y": 122
       }
     },
     {
@@ -1085,13 +1085,13 @@
         "model": {}
       },
       "pos": {
-        "x": 698,
-        "y": 138
+        "x": 602,
+        "y": 122
       }
     },
     {
       "id": "com.twineworks.tweakstreet.library.steps.map.calculator_867cc4b4-0057-435e-9fd3-1af49e691ea6",
-      "name": "Calculator: UTM to Lat/Long",
+      "name": "Calculator: UTM to Lat/Long using module",
       "type": "com.twineworks.tweakstreet.library.steps.map.calculator",
       "instanceCount": {
         "widgetType": "expression/number",
@@ -1102,7 +1102,7 @@
       },
       "data": {
         "meta": {
-          "name": "Calculator: UTM to Lat/Long",
+          "name": "Calculator: UTM to Lat/Long using module",
           "showingComment": true,
           "comment": {
             "markdown": {
@@ -1182,8 +1182,178 @@
         "model": {}
       },
       "pos": {
-        "x": 938,
-        "y": 138
+        "x": 874,
+        "y": 122
+      }
+    },
+    {
+      "id": "com.twineworks.tweakstreet.library.steps.map.calculator_ef671516-6c66-4d8f-b193-a6afece7cc1f",
+      "name": "Calculator: UTM to Lat/Long using library",
+      "type": "com.twineworks.tweakstreet.library.steps.map.calculator",
+      "instanceCount": {
+        "widgetType": "expression/number",
+        "widgetData": {
+          "text": "1"
+        },
+        "code": "1"
+      },
+      "data": {
+        "meta": {
+          "name": "Calculator: UTM to Lat/Long using library",
+          "showingComment": false,
+          "comment": {
+            "markdown": {
+              "text": {
+                "text": "",
+                "syntax": "markdown",
+                "size": {
+                  "width": "100%",
+                  "height": "100%"
+                }
+              },
+              "size": {
+                "width": null,
+                "height": 160
+              },
+              "view": "edit"
+            },
+            "editor": {
+              "collapsed": true
+            }
+          }
+        },
+        "entryVariables": {
+          "variables": {
+            "list": [
+              {
+                "name": "hemisphere",
+                "type": "any",
+                "value": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "N"
+                  },
+                  "code": "'N'"
+                }
+              }
+            ]
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "outputFields": {
+          "outputFields": {
+            "list": [
+              {
+                "name": "position_decimal",
+                "type": "any",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "# calculate latitude and longitude values from the UTM coordinates\ncoordinates.utm2ll(in.Ostwert, in.Nordwert, in.`UTM Zone`, entry_vars.hemisphere)",
+                    "size": {
+                      "width": 0,
+                      "height": 69
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "# calculate latitude and longitude values from the UTM coordinates\ncoordinates.utm2ll(in.Ostwert, in.Nordwert, in.`UTM Zone`, entry_vars.hemisphere)\n"
+                }
+              },
+              {
+                "name": "position_degrees",
+                "type": "any",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "# convert the floating point format to degrees, minutes, seconds\ncoordinates.decimal2degrees(position_decimal[:latitude], position_decimal[:longitude])",
+                    "size": {
+                      "width": 0,
+                      "height": 69
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "# convert the floating point format to degrees, minutes, seconds\ncoordinates.decimal2degrees(position_decimal[:latitude], position_decimal[:longitude])\n"
+                }
+              },
+              {
+                "name": "position_utm",
+                "type": "any",
+                "value": {
+                  "widgetType": "expression/code",
+                  "widgetData": {
+                    "text": "# test: convert the latitude and longitude values back to UTM format\ncoordinates.ll2utm(position_decimal[:latitude], position_decimal[:longitude])",
+                    "size": {
+                      "width": 0,
+                      "height": 62
+                    },
+                    "syntax": "tweakflow"
+                  },
+                  "code": "# test: convert the latitude and longitude values back to UTM format\ncoordinates.ll2utm(position_decimal[:latitude], position_decimal[:longitude])\n"
+                }
+              }
+            ]
+          },
+          "editor": {
+            "collapsed": false
+          }
+        },
+        "editor": {
+          "showEntryVariables": true,
+          "showOutputFields": true,
+          "dialogWidth": "wide"
+        },
+        "model": {}
+      },
+      "pos": {
+        "x": 874,
+        "y": 330
+      }
+    },
+    {
+      "id": "com.twineworks.tweakstreet.library.steps.map.dummy_22cd6674-b18a-4f69-a654-66c678966448",
+      "name": "Dummy",
+      "type": "com.twineworks.tweakstreet.library.steps.map.dummy",
+      "instanceCount": {
+        "widgetType": "expression/number",
+        "widgetData": {
+          "text": "1"
+        },
+        "code": "1"
+      },
+      "data": {
+        "meta": {
+          "name": "Dummy",
+          "showingComment": false,
+          "comment": {
+            "markdown": {
+              "text": {
+                "text": "",
+                "syntax": "markdown",
+                "size": {
+                  "width": "100%",
+                  "height": "100%"
+                }
+              },
+              "size": {
+                "width": null,
+                "height": 160
+              },
+              "view": "edit"
+            },
+            "editor": {
+              "collapsed": true
+            }
+          }
+        },
+        "editor": {},
+        "model": {}
+      },
+      "pos": {
+        "x": 1130,
+        "y": 330
       }
     }
   ],
@@ -1252,6 +1422,36 @@
       "id": "f09e5a58-a2a5-4d4f-86f4-2308d6e37230",
       "fromStep": "com.twineworks.tweakstreet.library.steps.map.calculator_eafb616b-532b-4d3b-a0c7-d55817c49e14",
       "toStep": "com.twineworks.tweakstreet.library.steps.map.calculator_867cc4b4-0057-435e-9fd3-1af49e691ea6",
+      "fromGate": "out",
+      "toGate": "in",
+      "disabled": false,
+      "partitioner": {
+        "widgetType": "expression/code",
+        "widgetData": {
+          "text": ""
+        },
+        "code": "nil"
+      }
+    },
+    {
+      "id": "066a6006-8f07-492c-8546-6cf11cf1a4ba",
+      "fromStep": "com.twineworks.tweakstreet.library.steps.map.calculator_eafb616b-532b-4d3b-a0c7-d55817c49e14",
+      "toStep": "com.twineworks.tweakstreet.library.steps.map.calculator_ef671516-6c66-4d8f-b193-a6afece7cc1f",
+      "fromGate": "out",
+      "toGate": "in",
+      "disabled": false,
+      "partitioner": {
+        "widgetType": "expression/code",
+        "widgetData": {
+          "text": ""
+        },
+        "code": "nil"
+      }
+    },
+    {
+      "id": "869d6667-227d-468b-803d-3c3b2e836a7c",
+      "fromStep": "com.twineworks.tweakstreet.library.steps.map.calculator_ef671516-6c66-4d8f-b193-a6afece7cc1f",
+      "toStep": "com.twineworks.tweakstreet.library.steps.map.dummy_22cd6674-b18a-4f69-a654-66c678966448",
       "fromGate": "out",
       "toGate": "in",
       "disabled": false,
