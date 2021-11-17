@@ -11,10 +11,11 @@ Aufbau:
 - UTM Koordinaten werden nach Längengrad und Breitengrad konvertiert
 
 Notiz: 2021-03-06 - die CSV Datei hat weniger Spalten als das Excel Sheet, ausserdem ist der Aufbau anders.
+Notiz: 2021-11-17 - der Aufbau der CSV Datei hat sich geändert.
 
 Es sind drei dataflows vorhanden:
 - windanlagen.dfl: dieser flow benutzt ein Modul für das konvertieren von UTM Koordinaten nach Latitude/Longitude
-- windanlagen-2.dfl: der gleiche flow, benutzt aber eine library (Java) für das konvertieren von UTM Koordinaten nach Latitude/Longitude. Hierfür muss vorher eine jar Datei kompiliert werden sihe: https://github.com/uwegeercken/tweakflow-datamelt
+- windanlagen-2.dfl: der gleiche flow, benutzt aber eine library (Java) für das konvertieren von UTM Koordinaten nach Latitude/Longitude. Hierfür muss vorher eine jar Datei kompiliert werden siehe: https://github.com/uwegeercken/tweakflow-datamelt
 - windanlagen-3.dfl: der gleiche flow, benutzt aber Python für das konvertieren von UTM Koordinaten nach Latitude/Longitude
 
-last-update: uwe geercken - 2021-03-08
+last-update: uwe geercken - 2021-11-17

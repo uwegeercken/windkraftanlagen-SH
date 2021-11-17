@@ -1,6 +1,6 @@
 {
   "type": "data-flow",
-  "appVersion": "1.14.4",
+  "appVersion": "1.19.3",
   "properties": {
     "meta": {
       "comment": {
@@ -32,7 +32,7 @@
       "dialogWidth": "wide"
     },
     "imports": {
-      "code": "# import the standard library\nimport strings from 'std';\n\n# import datamelt library: see https://github.com/uwegeercken/tweakflow-datamelt\nimport coordinates from 'datamelt/coords.tf';\n",
+      "code": "# import the standard library\nimport strings from 'std';\n\n# import datamelt library: see https://github.com/uwegeercken/tweakflow-datamelt\nimport coordinates from 'datamelt/std';\n",
       "size": {
         "width": 0,
         "height": 123
@@ -123,10 +123,10 @@
           "widgetType": "expression/local-file",
           "widgetData": {
             "interpolation": true,
-            "text": "./data/input/WKA-OpenData_2019-12-10.csv",
+            "text": "./data/input/opendata_wka_ib_gv_vb_sh_20210713.csv",
             "dialogIntent": "openFile"
           },
-          "code": "'./data/input/WKA-OpenData_2019-12-10.csv'"
+          "code": "'./data/input/opendata_wka_ib_gv_vb_sh_20210713.csv'"
         },
         "compression": {
           "widgetType": "expression/select",
@@ -171,17 +171,17 @@
         "fieldSeparator": {
           "widgetType": "expression/separator",
           "widgetData": {
-            "value": "tab"
+            "value": "semicolon"
           },
-          "code": "\"\\t\""
+          "code": "\";\""
         },
         "fieldEncloser": {
           "widgetType": "expression/string",
           "widgetData": {
             "interpolation": true,
-            "text": ""
+            "text": "\""
           },
-          "code": "''"
+          "code": "'\"'"
         },
         "hasHeaderLine": {
           "widgetType": "expression/checkbox-boolean",
@@ -211,15 +211,15 @@
                 }
               },
               {
-                "name": "Gemeinde",
+                "name": "GEMEINDE",
                 "type": "string",
                 "mapping": {
                   "widgetType": "expression/string",
                   "widgetData": {
                     "interpolation": true,
-                    "text": "Gemeinde"
+                    "text": "GEMEINDE"
                   },
-                  "code": "'Gemeinde'"
+                  "code": "'GEMEINDE'"
                 },
                 "conversion": {
                   "widgetType": "expression/nil",
@@ -228,15 +228,15 @@
                 }
               },
               {
-                "name": "Anlage",
+                "name": "TYP",
                 "type": "string",
                 "mapping": {
                   "widgetType": "expression/string",
                   "widgetData": {
                     "interpolation": true,
-                    "text": "Anlage"
+                    "text": "TYP"
                   },
-                  "code": "'Anlage'"
+                  "code": "'TYP'"
                 },
                 "conversion": {
                   "widgetType": "expression/nil",
@@ -245,15 +245,83 @@
                 }
               },
               {
-                "name": "Inbetriebnahme",
+                "name": "HERSTELLER",
+                "type": "string",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "HERSTELLER"
+                  },
+                  "code": "'HERSTELLER'"
+                },
+                "conversion": {
+                  "widgetType": "expression/nil",
+                  "widgetData": {},
+                  "code": "nil"
+                }
+              },
+              {
+                "name": "NABENHOEHE",
+                "type": "string",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "NABENHOEHE"
+                  },
+                  "code": "'NABENHOEHE'"
+                },
+                "conversion": {
+                  "widgetType": "expression/nil",
+                  "widgetData": {},
+                  "code": "nil"
+                }
+              },
+              {
+                "name": "ROTORDURCHMESSER",
+                "type": "string",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "ROTORDURCHMESSER"
+                  },
+                  "code": "'ROTORDURCHMESSER'"
+                },
+                "conversion": {
+                  "widgetType": "expression/nil",
+                  "widgetData": {},
+                  "code": "nil"
+                }
+              },
+              {
+                "name": "SCHALLLEISTUNGSPEGEL",
+                "type": "string",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "SCHALLLEISTUNGSPEGEL"
+                  },
+                  "code": "'SCHALLLEISTUNGSPEGEL'"
+                },
+                "conversion": {
+                  "widgetType": "expression/nil",
+                  "widgetData": {},
+                  "code": "nil"
+                }
+              },
+              {
+                "name": "LEISTUNG",
                 "type": "long",
                 "mapping": {
                   "widgetType": "expression/string",
                   "widgetData": {
                     "interpolation": true,
-                    "text": "Inbetriebnahme"
+                    "text": "LEISTUNG"
                   },
-                  "code": "'Inbetriebnahme'"
+                  "code": "'LEISTUNG'"
                 },
                 "conversion": {
                   "widgetType": "expression/parse-number",
@@ -303,15 +371,15 @@
                 }
               },
               {
-                "name": "Leistung",
+                "name": "LEISTUNGSBEZUG",
                 "type": "string",
                 "mapping": {
                   "widgetType": "expression/string",
                   "widgetData": {
                     "interpolation": true,
-                    "text": "Leistung"
+                    "text": "LEISTUNGSBEZUG"
                   },
-                  "code": "'Leistung'"
+                  "code": "'LEISTUNGSBEZUG'"
                 },
                 "conversion": {
                   "widgetType": "expression/nil",
@@ -320,15 +388,131 @@
                 }
               },
               {
-                "name": "Nabenhöhe",
-                "type": "double",
+                "name": "OSTWERT",
+                "type": "long",
                 "mapping": {
                   "widgetType": "expression/string",
                   "widgetData": {
                     "interpolation": true,
-                    "text": "Nabenhöhe"
+                    "text": "OSTWERT"
                   },
-                  "code": "'Nabenhöhe'"
+                  "code": "'OSTWERT'"
+                },
+                "conversion": {
+                  "widgetType": "expression/parse-number",
+                  "widgetData": {
+                    "pattern": {
+                      "widgetType": "expression/number-pattern",
+                      "widgetData": {
+                        "value": "0"
+                      },
+                      "code": "'0'"
+                    },
+                    "locale": {
+                      "widgetType": "expression/locale",
+                      "widgetData": {
+                        "value": "en-US"
+                      },
+                      "code": "'en-US'"
+                    },
+                    "trim": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": true
+                      },
+                      "code": "true"
+                    },
+                    "nilValue": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": ""
+                      },
+                      "code": "''"
+                    },
+                    "parseDecimal": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": false
+                      },
+                      "code": "false"
+                    },
+                    "editor": {
+                      "collapsed": true
+                    },
+                    "model": {}
+                  },
+                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('0', 'en-US', true, '', false)\n"
+                }
+              },
+              {
+                "name": "NORDWERT",
+                "type": "long",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "NORDWERT"
+                  },
+                  "code": "'NORDWERT'"
+                },
+                "conversion": {
+                  "widgetType": "expression/parse-number",
+                  "widgetData": {
+                    "pattern": {
+                      "widgetType": "expression/number-pattern",
+                      "widgetData": {
+                        "value": "0"
+                      },
+                      "code": "'0'"
+                    },
+                    "locale": {
+                      "widgetType": "expression/locale",
+                      "widgetData": {
+                        "value": "en-US"
+                      },
+                      "code": "'en-US'"
+                    },
+                    "trim": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": true
+                      },
+                      "code": "true"
+                    },
+                    "nilValue": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": ""
+                      },
+                      "code": "''"
+                    },
+                    "parseDecimal": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": false
+                      },
+                      "code": "false"
+                    },
+                    "editor": {
+                      "collapsed": true
+                    },
+                    "model": {}
+                  },
+                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('0', 'en-US', true, '', false)\n"
+                }
+              },
+              {
+                "name": "GENEHMIGT_AM",
+                "type": "long",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "GENEHMIGT_AM"
+                  },
+                  "code": "'GENEHMIGT_AM'"
                 },
                 "conversion": {
                   "widgetType": "expression/parse-number",
@@ -343,9 +527,9 @@
                     "locale": {
                       "widgetType": "expression/locale",
                       "widgetData": {
-                        "value": "en-US"
+                        "value": "de-DE"
                       },
-                      "code": "'en-US'"
+                      "code": "'de-DE'"
                     },
                     "trim": {
                       "widgetType": "expression/checkbox-boolean",
@@ -374,19 +558,19 @@
                     },
                     "model": {}
                   },
-                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('#,##0', 'en-US', true, '', false)\n"
+                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('#,##0', 'de-DE', true, '', false)\n"
                 }
               },
               {
-                "name": "Rotordurchmesser",
-                "type": "double",
+                "name": "INBETRIEBNAHME",
+                "type": "long",
                 "mapping": {
                   "widgetType": "expression/string",
                   "widgetData": {
                     "interpolation": true,
-                    "text": "Rotordurchmesser"
+                    "text": "INBETRIEBNAHME"
                   },
-                  "code": "'Rotordurchmesser'"
+                  "code": "'INBETRIEBNAHME'"
                 },
                 "conversion": {
                   "widgetType": "expression/parse-number",
@@ -401,9 +585,9 @@
                     "locale": {
                       "widgetType": "expression/locale",
                       "widgetData": {
-                        "value": "en-US"
+                        "value": "de-DE"
                       },
-                      "code": "'en-US'"
+                      "code": "'de-DE'"
                     },
                     "trim": {
                       "widgetType": "expression/checkbox-boolean",
@@ -432,135 +616,128 @@
                     },
                     "model": {}
                   },
-                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('#,##0', 'en-US', true, '', false)\n"
+                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('#,##0', 'de-DE', true, '', false)\n"
                 }
               },
               {
-                "name": "Ostwert",
-                "type": "long",
-                "mapping": {
-                  "widgetType": "expression/string",
-                  "widgetData": {
-                    "interpolation": true,
-                    "text": "Ostwert"
-                  },
-                  "code": "'Ostwert'"
-                },
-                "conversion": {
-                  "widgetType": "expression/parse-number",
-                  "widgetData": {
-                    "pattern": {
-                      "widgetType": "expression/number-pattern",
-                      "widgetData": {
-                        "value": "0"
-                      },
-                      "code": "'0'"
-                    },
-                    "locale": {
-                      "widgetType": "expression/locale",
-                      "widgetData": {
-                        "value": "en-US"
-                      },
-                      "code": "'en-US'"
-                    },
-                    "trim": {
-                      "widgetType": "expression/checkbox-boolean",
-                      "widgetData": {
-                        "value": true
-                      },
-                      "code": "true"
-                    },
-                    "nilValue": {
-                      "widgetType": "expression/string",
-                      "widgetData": {
-                        "interpolation": true,
-                        "text": ""
-                      },
-                      "code": "''"
-                    },
-                    "parseDecimal": {
-                      "widgetType": "expression/checkbox-boolean",
-                      "widgetData": {
-                        "value": false
-                      },
-                      "code": "false"
-                    },
-                    "editor": {
-                      "collapsed": true
-                    },
-                    "model": {}
-                  },
-                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('0', 'en-US', true, '', false)\n"
-                }
-              },
-              {
-                "name": "Nordwert",
-                "type": "long",
-                "mapping": {
-                  "widgetType": "expression/string",
-                  "widgetData": {
-                    "interpolation": true,
-                    "text": "Nordwert"
-                  },
-                  "code": "'Nordwert'"
-                },
-                "conversion": {
-                  "widgetType": "expression/parse-number",
-                  "widgetData": {
-                    "pattern": {
-                      "widgetType": "expression/number-pattern",
-                      "widgetData": {
-                        "value": "0"
-                      },
-                      "code": "'0'"
-                    },
-                    "locale": {
-                      "widgetType": "expression/locale",
-                      "widgetData": {
-                        "value": "en-US"
-                      },
-                      "code": "'en-US'"
-                    },
-                    "trim": {
-                      "widgetType": "expression/checkbox-boolean",
-                      "widgetData": {
-                        "value": true
-                      },
-                      "code": "true"
-                    },
-                    "nilValue": {
-                      "widgetType": "expression/string",
-                      "widgetData": {
-                        "interpolation": true,
-                        "text": ""
-                      },
-                      "code": "''"
-                    },
-                    "parseDecimal": {
-                      "widgetType": "expression/checkbox-boolean",
-                      "widgetData": {
-                        "value": false
-                      },
-                      "code": "false"
-                    },
-                    "editor": {
-                      "collapsed": true
-                    },
-                    "model": {}
-                  },
-                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('0', 'en-US', true, '', false)\n"
-                }
-              },
-              {
-                "name": "Status",
+                "name": "STATUS",
                 "type": "string",
                 "mapping": {
                   "widgetType": "expression/string",
                   "widgetData": {
                     "interpolation": true,
-                    "text": "Status"
+                    "text": "STATUS"
                   },
-                  "code": "'Status'"
+                  "code": "'STATUS'"
+                },
+                "conversion": {
+                  "widgetType": "expression/nil",
+                  "widgetData": {},
+                  "code": "nil"
+                }
+              },
+              {
+                "name": "BST_NR",
+                "type": "string",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "BST_NR"
+                  },
+                  "code": "'BST_NR'"
+                },
+                "conversion": {
+                  "widgetType": "expression/nil",
+                  "widgetData": {},
+                  "code": "nil"
+                }
+              },
+              {
+                "name": "ANL_NR",
+                "type": "string",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "ANL_NR"
+                  },
+                  "code": "'ANL_NR'"
+                },
+                "conversion": {
+                  "widgetType": "expression/nil",
+                  "widgetData": {},
+                  "code": "nil"
+                }
+              },
+              {
+                "name": "DATENDATUM",
+                "type": "long",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "DATENDATUM"
+                  },
+                  "code": "'DATENDATUM'"
+                },
+                "conversion": {
+                  "widgetType": "expression/parse-number",
+                  "widgetData": {
+                    "pattern": {
+                      "widgetType": "expression/number-pattern",
+                      "widgetData": {
+                        "value": "#,##0"
+                      },
+                      "code": "'#,##0'"
+                    },
+                    "locale": {
+                      "widgetType": "expression/locale",
+                      "widgetData": {
+                        "value": "de-DE"
+                      },
+                      "code": "'de-DE'"
+                    },
+                    "trim": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": true
+                      },
+                      "code": "true"
+                    },
+                    "nilValue": {
+                      "widgetType": "expression/string",
+                      "widgetData": {
+                        "interpolation": true,
+                        "text": ""
+                      },
+                      "code": "''"
+                    },
+                    "parseDecimal": {
+                      "widgetType": "expression/checkbox-boolean",
+                      "widgetData": {
+                        "value": false
+                      },
+                      "code": "false"
+                    },
+                    "editor": {
+                      "collapsed": true
+                    },
+                    "model": {}
+                  },
+                  "code": "let {\n  make_parser: (string pattern, string locale, boolean trim, string nilValue, boolean parseDecimal) -> function via {:class 'com.twineworks.tweakstreet.library.conversion.Parsers$number_parser'};\n}\nmake_parser('#,##0', 'de-DE', true, '', false)\n"
+                }
+              },
+              {
+                "name": "DATENQUELLE",
+                "type": "string",
+                "mapping": {
+                  "widgetType": "expression/string",
+                  "widgetData": {
+                    "interpolation": true,
+                    "text": "DATENQUELLE"
+                  },
+                  "code": "'DATENQUELLE'"
                 },
                 "conversion": {
                   "widgetType": "expression/nil",
@@ -843,7 +1020,7 @@
                 "left": {
                   "value": {
                     "gate": "in",
-                    "name": "Status"
+                    "name": "STATUS"
                   }
                 },
                 "right": {
@@ -909,7 +1086,7 @@
     },
     {
       "id": "com.twineworks.tweakstreet.library.steps.map.calculator_eafb616b-532b-4d3b-a0c7-d55817c49e14",
-      "name": "Calculator: split",
+      "name": "Calculator: additional fields",
       "type": "com.twineworks.tweakstreet.library.steps.map.calculator",
       "instanceCount": {
         "widgetType": "expression/number",
@@ -920,7 +1097,7 @@
       },
       "data": {
         "meta": {
-          "name": "Calculator: split",
+          "name": "Calculator: additional fields",
           "showingComment": false,
           "comment": {
             "markdown": {
@@ -945,24 +1122,7 @@
         },
         "entryVariables": {
           "variables": {
-            "list": [
-              {
-                "name": "splitter",
-                "type": "any",
-                "value": {
-                  "widgetType": "expression/code",
-                  "widgetData": {
-                    "text": "(x) -> strings.split(x, \" \")",
-                    "size": {
-                      "width": 0,
-                      "height": 36
-                    },
-                    "syntax": "tweakflow"
-                  },
-                  "code": "(x) -> strings.split(x, \" \")"
-                }
-              }
-            ]
+            "list": []
           },
           "editor": {
             "collapsed": false
@@ -972,67 +1132,35 @@
           "outputFields": {
             "list": [
               {
-                "name": "Leistung",
-                "type": "long",
-                "value": {
-                  "widgetType": "expression/code",
-                  "widgetData": {
-                    "text": "vars.splitter(in.Leistung)[0]",
-                    "size": {
-                      "width": 0,
-                      "height": 36
-                    },
-                    "syntax": "tweakflow"
-                  },
-                  "code": "vars.splitter(in.Leistung)[0]"
-                }
-              },
-              {
-                "name": "Leistungseinheit",
-                "type": "string",
-                "value": {
-                  "widgetType": "expression/code",
-                  "widgetData": {
-                    "text": "vars.splitter(in.Leistung)[1]",
-                    "size": {
-                      "width": 0,
-                      "height": 36
-                    },
-                    "syntax": "tweakflow"
-                  },
-                  "code": "vars.splitter(in.Leistung)[1]"
-                }
-              },
-              {
                 "name": "UTM Zone",
                 "type": "long",
                 "value": {
                   "widgetType": "expression/code",
                   "widgetData": {
-                    "text": "strings.substring(in.Ostwert,0,2) ",
+                    "text": "strings.substring(in.OSTWERT,0,2) ",
                     "size": {
                       "width": 0,
                       "height": 36
                     },
                     "syntax": "tweakflow"
                   },
-                  "code": "strings.substring(in.Ostwert,0,2)"
+                  "code": "strings.substring(in.OSTWERT,0,2)"
                 }
               },
               {
-                "name": "Ostwert",
+                "name": "OSTWERT",
                 "type": "long",
                 "value": {
                   "widgetType": "expression/code",
                   "widgetData": {
-                    "text": "# the zone info at the beginning needs to be removed\nstrings.substring(in.Ostwert,2)",
+                    "text": "# the zone info at the beginning needs to be removed\nstrings.substring(in.OSTWERT,2)",
                     "size": {
                       "width": 0,
                       "height": 62
                     },
                     "syntax": "tweakflow"
                   },
-                  "code": "# the zone info at the beginning needs to be removed\nstrings.substring(in.Ostwert,2)\n"
+                  "code": "# the zone info at the beginning needs to be removed\nstrings.substring(in.OSTWERT,2)\n"
                 }
               }
             ]
@@ -1118,14 +1246,14 @@
                 "value": {
                   "widgetType": "expression/code",
                   "widgetData": {
-                    "text": "# calculate latitude and longitude values from the UTM coordinates\ncoordinates.utm2ll(in.Ostwert, in.Nordwert, in.`UTM Zone`, entry_vars.hemisphere)",
+                    "text": "# calculate latitude and longitude values from the UTM coordinates\ncoordinates.utm2ll(in.OSTWERT, in.NORDWERT, in.`UTM Zone`, entry_vars.hemisphere)",
                     "size": {
                       "width": 0,
                       "height": 69
                     },
                     "syntax": "tweakflow"
                   },
-                  "code": "# calculate latitude and longitude values from the UTM coordinates\ncoordinates.utm2ll(in.Ostwert, in.Nordwert, in.`UTM Zone`, entry_vars.hemisphere)\n"
+                  "code": "# calculate latitude and longitude values from the UTM coordinates\ncoordinates.utm2ll(in.OSTWERT, in.NORDWERT, in.`UTM Zone`, entry_vars.hemisphere)\n"
                 }
               },
               {
